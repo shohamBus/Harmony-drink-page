@@ -8,9 +8,13 @@ export function* getRandomDrinks() {
 	const response: AxiosResponse<any> = yield call(api.getRandom);
 	const drinkDerty: any = response.data.drinks[0];
 	
-	const ingredientKeys = Object.keys(drinkDerty).filter((key) => key.startsWith('strIngredient'));
-	const ingredientWithValues = ingredientKeys.filter((key) => drinkDerty[key]);
-	const ingredient = ingredientWithValues.map((key) => drinkDerty[key]);
+	const ingredient: string[] = [];
+	// eslint-disable-next-line no-restricted-syntax
+	for (const key in drinkDerty) {
+		if (key.startsWith('strIngredient') && drinkItem[key]) {
+			ingredient.push(drinkItem[key]);
+		}
+	}
 	const drinkClean: any = {
 		idDrink: drinkDerty?.idDrink,
 		strDrink: drinkDerty?.strDrink,
