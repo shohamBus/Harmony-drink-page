@@ -11,8 +11,8 @@ export function* getRandomDrinks() {
 	const ingredient: string[] = [];
 	// eslint-disable-next-line no-restricted-syntax
 	for (const key in drinkDerty) {
-		if (key.startsWith('strIngredient') && drinkItem[key]) {
-			ingredient.push(drinkItem[key]);
+		if (key.startsWith('strIngredient') && drinkDerty[key]) {
+			ingredient.push(drinkDerty[key]);
 		}
 	}
 	const drinkClean: any = {
