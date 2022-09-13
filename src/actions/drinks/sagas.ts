@@ -10,8 +10,8 @@ import { FilterInputIngredient, sortingByDate, sortingByName } from './manager';
 export function* getDrinks(action: GetDrinksAction) {
 	const { inputStrName } = action;
 	const response: AxiosResponse<Drink[] | any> = yield call(api.getDrinks, inputStrName);
-	const drinkDerty: any = response.data.drinks;
-	const drinkClean: Drink[] = drinkDerty.map((drinkItem: any) => {
+	const drinkDerty: any = response?.data?.drinks;
+	const drinkClean: Drink[] = drinkDerty?.map((drinkItem: any) => {
 		const ingredient: string[] = [];
 		// eslint-disable-next-line no-restricted-syntax
 		for (const key in drinkItem) {
