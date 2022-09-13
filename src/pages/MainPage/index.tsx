@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { baseConnect } from '@base/features/base-redux-react-connect';
 import { ApplicationState } from 'actions';
-// import RoutesPath from 'routes/RoutesPath';
 import { Grid, Box } from '@mui/material';
 import { Header } from 'common-components/business';
 import {
@@ -11,19 +10,7 @@ import { drinksSelector, FilterArrSelector } from 'actions/drinks';
 import InpSearch from 'common-components/controllers/InpSearch';
 
 export class MainPage extends React.Component<any> {
-	// 
-
-	componentDidMount(): void {
-		// const { cartItems, history } = this.props;
-
-		// if (!cartItems || !cartItems.length) {
-		// history.push(RoutesPath.ROOT);
-		// }
-	}
-
 	render() {
-		// const { cartItems, translate } = this.props;
-
 		return (
 			<>
 				<Box sx={{ flexGrow: 1, m: 2 }}>

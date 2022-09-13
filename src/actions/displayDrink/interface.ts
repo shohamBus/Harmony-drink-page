@@ -20,10 +20,10 @@ export interface ActionCreator {
 }
 
 export interface GetDisplayDrinkAction extends Action<TypesNames.GET_DISPLAY_DRINK> {
-	data: Drink;
+	drinkArr: Drink;
 }
 export interface GetRandomDrinkAction extends Action<TypesNames.GET_RANDOM_DRINK> {
-	data: Drink;
+	drinkArr: Drink;
 }
 
 /* ------------- Define Any Interfaces ------------- */

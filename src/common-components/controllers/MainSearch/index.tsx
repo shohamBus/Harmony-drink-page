@@ -11,7 +11,7 @@ export type Props = {
 	lable: string;
 	buttonText?: string;
 	withButton: boolean;
-	getDrinks: typeof GetDrinksFunction;
+	getDrinks?: typeof GetDrinksFunction;
 
 };
 

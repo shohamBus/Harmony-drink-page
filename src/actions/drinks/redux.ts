@@ -2,17 +2,20 @@ import { createDraft, Draft } from 'immer';
 import { createReducerCase } from '@base/features/base-decorator';
 import { createReducer, createActions } from 'reduxsauce';
 import {
-	DrinksState, TypesNames, ActionCreator, SetDrinksAction, FilterByIngredientAction, Drink
+	DrinksState, TypesNames, ActionCreator, SetDrinksAction, SetFilterByIngredientAction, SetSortBYNameAction, SetSortBYDateAction
 } from './interface';
 
 /* ------------- Types and Action Creators ------------- */
 
 const { Creators } = createActions<TypesNames, ActionCreator>({
-	getDrinks: ['data'], // handle by saga
-	setDrinks: ['data'],
-	filterByIngredient: ['data'],
-	sortBYName: ['data'],
-	sortBYDate: ['data'],
+	getDrinks: ['inputStrName'], // handle by saga
+	setDrinks: ['drinksList'],
+	filterByIngredient: ['inputStrIngredient', 'drinkArr'], // handle by saga
+	setFilterByIngredient: ['drinksList'],
+	sortBYName: ['filterDrinkArr'], // handle by saga
+	setSortBYName: ['filterDrinkArr'],
+	sortBYDate: ['filterDrinkArr'], // handle by saga
+	setSortBYDate: ['filterDrinkArr'],
 });
 
 export const DrinksTypes = TypesNames;
@@ -34,46 +37,32 @@ export const FilterArrSelector = {
 
 /* ------------- Reducers ------------- */
 const setDrinksReducer = (draft: Draft<DrinksState>, action: SetDrinksAction) => {
-	const { data } = action;
-	draft.filterArr = data;
-	draft.drinksArr = data;
+	const { drinksList } = action;
+	draft.filterArr = drinksList;
+	draft.drinksArr = drinksList;
 };
 
-const filterByIngredientReducer = (draft: Draft<DrinksState>, action: FilterByIngredientAction) => {
-	const { data } = action;
-	
-	const inp = data.toLowerCase();
-	draft.filterArr = [...draft.drinksArr].filter((drink) => {
-		return (
-			drink.ingredient.find((item) => item.toLowerCase().startsWith(inp))
-		);
-	});
+const setFilterByIngredientReducer = (draft: Draft<DrinksState>, action: SetFilterByIngredientAction) => {
+	const { drinksList } = action;
+	draft.filterArr = drinksList;
 };
 
-const sortBYNameReducer = (draft: Draft<DrinksState>) => {
-	draft.filterArr = draft.filterArr.sort((a: Drink, b: Drink) => {
-		if (a.strDrink > b.strDrink) {
-			return 1;
-		}
-		if (b.strDrink > a.strDrink) {
-			return -1;
-		}
-		return 0;
-	});
+const setSortBYNameReducer = (draft: Draft<DrinksState>, action: SetSortBYNameAction) => {
+	const { filterDrinkArr } = action;
+	draft.filterArr = filterDrinkArr;
 };
   
-const sortBYDateReducer = (draft: Draft<DrinksState>) => {
-	draft.filterArr = draft.filterArr.sort(
-		(a, b) => Date.parse(b.dateModified) - Date.parse(a.dateModified)
-	);
+const setSortBYDateReducer = (draft: Draft<DrinksState>, action: SetSortBYDateAction) => {
+	const { filterDrinkArr } = action;
+	draft.filterArr = filterDrinkArr;
 };
 
 /* ------------- Hookup Reducers To Types ------------- */
 
 export const reducer = createReducer(INITIAL_STATE, {
 	[TypesNames.SET_DRINKS]: createReducerCase(setDrinksReducer),
-	[TypesNames.FILTER_BY_INGREDIENT]: createReducerCase(filterByIngredientReducer),
-	[TypesNames.SORT_BY_NAME]: createReducerCase(sortBYNameReducer),
-	[TypesNames.SORT_BY_DATE]: createReducerCase(sortBYDateReducer),
+	[TypesNames.SET_FILTER_BY_INGREDIENT]: createReducerCase(setFilterByIngredientReducer),
+	[TypesNames.SET_SORT_BY_NAME]: createReducerCase(setSortBYNameReducer),
+	[TypesNames.SET_SORT_BY_DATE]: createReducerCase(setSortBYDateReducer),
 });
 

@@ -1,22 +1,36 @@
+import { baseConnect } from '@base/features/base-redux-react-connect';
 import { TextField } from '@mui/material';
-import { DrinksActions } from 'actions/drinks';
+import { ApplicationState } from 'actions';
+import { DrinksActions, drinksSelector, FilterArrSelector } from 'actions/drinks';
 import React, { useState } from 'react';
-import { withLocalize, LocalizeContextProps } from 'react-localize-redux';
+import { LocalizeContextProps } from 'react-localize-redux';
 import { useDispatch } from 'react-redux';
 
+interface Drink{
+	idDrink: string;
+	strDrink: string;
+	strCategory: string;
+	ingredient: string[];
+	dateModified: string;
+	strDrinkThumb: string;
+	strGlass: string;
+	strInstructions: string;
+	strTags: string;
+}
 export type Props = {
-
+	drinkArr: Drink[];
 };
 
-const inpSearch: React.FC<Props & LocalizeContextProps> = () => {
+const inpSearch: React.FC<Props & LocalizeContextProps> = (props: Props) => {
 	const [display, setDisplay] = useState('');
 	const dispatch = useDispatch();
+	const { drinkArr } = props;
 
 	// send to reducer-filter &&  the display
 	const handleChange = (event: any) => {
 		const inp = event.target.value;
 		setDisplay(inp);
-		dispatch(DrinksActions.filterByIngredient(inp));
+		dispatch(DrinksActions.filterByIngredient(inp, drinkArr));
 	};
 
 	return (
@@ -45,4 +59,12 @@ const inpSearch: React.FC<Props & LocalizeContextProps> = () => {
 	);
 };
 
-export default withLocalize<Props & LocalizeContextProps>(inpSearch);
+const mapStateToProps = (state: ApplicationState) => ({
+	filterArr: FilterArrSelector.getFilterArr(state.drinks),
+	drinkArr: drinksSelector.getDrinksArr(state.drinks)
+});
+export default baseConnect(
+	inpSearch,
+	mapStateToProps,
+	
+);

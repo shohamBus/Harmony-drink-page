@@ -39,15 +39,7 @@ const chip: React.FC<Props & LocalizeContextProps> = (props: Props& LocalizeCont
 						return (
 							<ListItem key={data.key} className="chip">
 								<Chip
-									onClick={(event) => dispatch(DrinksActions.getDrinks(event.target.innerHTML))} // eslint-disable-line no-eval
-									// setCurrentSearch('');
-									// dispatch(UpdateMainSearch(e.target.innerHTML));
-									// dispatch(
-									// filterDrinks({
-									// mainSearch: e.target.innerHTML,
-									// ingredient: filters.ingredient,
-									// })
-									// );
+									onClick={() => dispatch(DrinksActions.getDrinks(data.value))}
 									icon={icon}
 									label={data.value}
 									onDelete={handleDelete(data)}

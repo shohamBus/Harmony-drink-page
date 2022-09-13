@@ -10,8 +10,8 @@ import {
 /* ------------- Types and Action Creators ------------- */
 
 const { Creators } = createActions<TypesNames, ActionCreator>({
-	getDisplayDrink: ['data'], // handle by saga
-	getRandomDrink: ['data'] // handle by saga
+	getDisplayDrink: ['drinkArr'], // handle by saga
+	getRandomDrink: ['drinkArr'] // handle by saga
 });
 
 export const DisplayDrinkTypes = TypesNames;
@@ -42,8 +42,8 @@ export const displayDrinkSelector = {
 /* ------------- Reducers ------------- */
 
 const getDisplayDrinkReducer = (draft: Draft<Display>, action: GetDisplayDrinkAction) => {
-	const { data } = action;
-	draft.display = data;
+	const { drinkArr } = action;
+	draft.display = drinkArr;
 };
 
 /* ------------- Hookup Reducers To Types ------------- */

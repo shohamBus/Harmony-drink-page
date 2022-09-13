@@ -12,15 +12,15 @@ export function* getRandomDrinks() {
 	const ingredientWithValues = ingredientKeys.filter((key) => drinkDerty[key]);
 	const ingredient = ingredientWithValues.map((key) => drinkDerty[key]);
 	const drinkClean: any = {
-		idDrink: drinkDerty.idDrink,
-		strDrink: drinkDerty.strDrink,
-		strCategory: drinkDerty.strCategory,
+		idDrink: drinkDerty?.idDrink,
+		strDrink: drinkDerty?.strDrink,
+		strCategory: drinkDerty?.strCategory,
 		ingredient,
-		dateModified: drinkDerty.dateModified,
-		strDrinkThumb: drinkDerty.strDrinkThumb,
-		strGlass: drinkDerty.strGlass,
-		strInstructions: drinkDerty.strInstructions,
-		strTags: drinkDerty.strTags,
+		dateModified: drinkDerty?.dateModified,
+		strDrinkThumb: drinkDerty?.strDrinkThumb,
+		strGlass: drinkDerty?.strGlass,
+		strInstructions: drinkDerty?.strInstructions,
+		strTags: drinkDerty?.strTags,
 	};
 	yield put(DisplayDrinkActions.getDisplayDrink(drinkClean));
 }

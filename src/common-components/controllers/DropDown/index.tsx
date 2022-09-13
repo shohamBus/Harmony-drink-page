@@ -1,22 +1,39 @@
+import { baseConnect } from '@base/features/base-redux-react-connect';
 import { MenuItem, TextField } from '@mui/material';
-import { DrinksActions } from 'actions/drinks';
+import { ApplicationState } from 'actions';
+import { DrinksActions, FilterArrSelector } from 'actions/drinks';
 import * as React from 'react';
-import { withLocalize, LocalizeContextProps } from 'react-localize-redux';
+import { LocalizeContextProps } from 'react-localize-redux';
 import { useDispatch } from 'react-redux';
+
+interface Drink{
+	idDrink: string;
+	strDrink: string;
+	strCategory: string;
+	ingredient: string[];
+	dateModified: string;
+	strDrinkThumb: string;
+	strGlass: string;
+	strInstructions: string;
+	strTags: string;
+}
 
 export interface Props {
 	label: string;
 	Names: string[];
+	filterArr: Drink[];
+
 }
 
 const dropDown: React.FC<Props & LocalizeContextProps> = (props: Props) => {
-	const { label, Names } = props;
+	const { label, Names, filterArr } = props;
+	
 	const [display, setDisplay] = React.useState('');
 	const dispatch = useDispatch();
 	const handleChange = (value: string) => {
 		setDisplay(value);
-		if (value === 'Name') dispatch(DrinksActions.sortBYName());
-		if (value === 'Date') dispatch(DrinksActions.sortBYDate());
+		if (value === 'Name') dispatch(DrinksActions.sortBYName(filterArr));
+		if (value === 'Date') dispatch(DrinksActions.sortBYDate(filterArr));
 	};
 	return (
 		<TextField
@@ -51,4 +68,11 @@ const dropDown: React.FC<Props & LocalizeContextProps> = (props: Props) => {
 	);
 };
 
-export default withLocalize<Props & LocalizeContextProps >(dropDown);
+const mapStateToProps = (state: ApplicationState) => ({
+	filterArr: FilterArrSelector.getFilterArr(state.drinks)
+});
+export default baseConnect(
+	dropDown,
+	mapStateToProps,
+	
+);

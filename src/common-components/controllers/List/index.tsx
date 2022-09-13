@@ -21,10 +21,10 @@ interface Drink{
 	strTags: string;
 }
 
-export type Props = {
+export interface Props {
 	headLine: string;
 	filterArr: Drink[];
-};
+}
 
 const list: React.FC<Props & LocalizeContextProps> = (props: Props& LocalizeContextProps) => {
 	const { headLine, filterArr } = props;
@@ -71,7 +71,5 @@ const mapStateToProps = (state: ApplicationState) => ({
 export default baseConnect(
 	list,
 	mapStateToProps,
-	// (dispatch: Dispatch) => ({
-	// // getDrinks: () => dispatch(DrinksActions.getDrinks()),
-	// })
+	
 );
